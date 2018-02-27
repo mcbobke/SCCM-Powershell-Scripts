@@ -27,24 +27,28 @@ function Get-LoggedInUsers
     #>
 
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$ComputerName,
-        [Parameter(Mandatory=$true, Position=1)][System.Management.Automation.PSCredential]$Credential
+        [Parameter(Mandatory = $true, Position = 0)][string]$ComputerName,
+        [Parameter(Mandatory = $true, Position = 1)][System.Management.Automation.PSCredential]$Credential
     )
+
+    if (!Test-Connection -ComputerName $ComputerName -Quiet) {
+        throw "That computer is offline or does not exist."
+    }
 
     $regexa = '.+Domain="(.+)",Name="(.+)"$'
     $regexd = '.+LogonId="(\d+)"$'
 
     $logontype = @{
-        "0"="Local System"
-        "2"="Interactive" # (Local logon)
-        "3"="Network" # (Remote logon)
-        "4"="Batch" # (Scheduled task)
-        "5"="Service" # (Service account logon)
-        "7"="Unlock" # (Screen saver)
-        "8"="NetworkCleartext" # (Cleartext network logon)
-        "9"="NewCredentials" # (RunAs using alternate credentials)
-        "10"="RemoteInteractive" # (RDP\TS\RemoteAssistance)
-        "11"="CachedInteractive" # (Local w\cached credentials)
+        "0"  = "Local System"
+        "2"  = "Interactive" # (Local logon)
+        "3"  = "Network" # (Remote logon)
+        "4"  = "Batch" # (Scheduled task)
+        "5"  = "Service" # (Service account logon)
+        "7"  = "Unlock" # (Screen saver)
+        "8"  = "NetworkCleartext" # (Cleartext network logon)
+        "9"  = "NewCredentials" # (RunAs using alternate credentials)
+        "10" = "RemoteInteractive" # (RDP\TS\RemoteAssistance)
+        "11" = "CachedInteractive" # (Local w\cached credentials)
     }
 
     $logon_sessions = @(Get-WmiObject -ClassName Win32_LogonSession -ComputerName $computername -Credential $Credential)
@@ -71,7 +75,7 @@ function Get-LoggedInUsers
         $loggedonuser | Add-Member -MemberType NoteProperty -Name "Type" -Value $logontype[$_.logontype.tostring()]
         $loggedonuser | Add-Member -MemberType NoteProperty -Name "Auth" -Value $_.authenticationpackage
         $loggedonuser | Add-Member -MemberType NoteProperty -Name "StartTime" -Value $starttime
-        $logons += ,$loggedonuser
+        $logons += , $loggedonuser
     }
 
     $logons
@@ -103,23 +107,27 @@ function Get-WindowsVersion
     #>
 
     param(
-        [Parameter(Mandatory=$true, Position=0)][string]$ComputerName,
-        [Parameter(Mandatory=$true, Position=1)][System.Management.Automation.PSCredential]$Credential
+        [Parameter(Mandatory = $true, Position = 0)][string]$ComputerName,
+        [Parameter(Mandatory = $true, Position = 1)][System.Management.Automation.PSCredential]$Credential
     )
+
+    if (!Test-Connection -ComputerName $ComputerName -Quiet) {
+        throw "That computer is offline or does not exist."
+    }
 
     $WinVer = New-Object -TypeName PSObject
 
     $WinVer | Add-Member -MemberType NoteProperty -Name Major `
-    -Value $(Invoke-Command -comp $ComputerName -cred $Credential -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' CurrentMajorVersionNumber}).CurrentMajorVersionNumber
+        -Value $(Invoke-Command -comp $ComputerName -cred $Credential -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' CurrentMajorVersionNumber}).CurrentMajorVersionNumber
 
     $WinVer | Add-Member -MemberType NoteProperty -Name Minor `
-    -Value $(Invoke-Command -comp $ComputerName -cred $Credential  -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' CurrentMinorVersionNumber}).CurrentMinorVersionNumber
+        -Value $(Invoke-Command -comp $ComputerName -cred $Credential  -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' CurrentMinorVersionNumber}).CurrentMinorVersionNumber
 
     $WinVer | Add-Member -MemberType NoteProperty -Name Build `
-    -Value $(Invoke-Command -comp $ComputerName -cred $Credential  -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' CurrentBuild}).CurrentBuild
+        -Value $(Invoke-Command -comp $ComputerName -cred $Credential  -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' CurrentBuild}).CurrentBuild
 
     $WinVer | Add-Member -MemberType NoteProperty -Name Revision `
-    -Value $(Invoke-Command -comp $ComputerName -cred $Credential  -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' UBR}).UBR
+        -Value $(Invoke-Command -comp $ComputerName -cred $Credential  -script {Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion' UBR}).UBR
 
     $WinVer
 }

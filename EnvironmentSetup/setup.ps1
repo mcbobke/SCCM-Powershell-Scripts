@@ -11,10 +11,10 @@ Copy-Item @ModuleParams
 
 $ProfileParams = @{
     Path = "$PSScriptRoot\profile.ps1";
-    Destination = $profile.CurrentUserAllHosts;
+    Destination = $profile.AllUsersAllHosts;
     Force = $True;
 }
 Copy-Item @ProfileParams
 
 # Execute profile - will show errors if certain profiles don't exist
-& $profile.CurrentUserAllHosts
+& $profile.AllUsersAllHosts
