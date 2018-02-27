@@ -1,21 +1,3 @@
-# Variable to make editing options simpler
-$Shell = $Host.UI.RawUI
-
-Set-Location C:
-Import-Module MattBobkeCmdlets
-
-$Shell.WindowTitle = "Godmode Activated!"
-
-$WindowSize = $Shell.WindowSize
-$WindowSize.Width = 150
-$WindowSize.Height = 50
-$Shell.WindowSize = $WindowSize
-
-$BufferSize = $Shell.BufferSize
-$BufferSize.Width = 150
-$BufferSize.Height = 3000
-$Shell.BufferSize = $BufferSize
-
 function Test-Administrator {
     $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
     $principal = New-Object System.Security.Principal.WindowsPrincipal($identity)
@@ -37,3 +19,21 @@ function prompt {
     Write-Host "$(Get-Location)".Replace($Env:USERPROFILE, "~") -ForegroundColor Blue
     return ">" # The prompt function must return a string, or it will write the default prompt
 }
+
+# Variable to make editing options simpler
+$Shell = $Host.UI.RawUI
+
+Set-Location C:
+Import-Module MattBobkeCmdlets
+
+$Shell.WindowTitle = "Godmode Activated!"
+
+$BufferSize = $Shell.BufferSize
+$BufferSize.Width = 150
+$BufferSize.Height = 3000
+$Shell.BufferSize = $BufferSize
+
+$WindowSize = $Shell.WindowSize
+$WindowSize.Width = 150
+$WindowSize.Height = 50
+$Shell.WindowSize = $WindowSize
