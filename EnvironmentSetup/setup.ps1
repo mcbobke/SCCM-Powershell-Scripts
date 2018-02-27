@@ -1,6 +1,3 @@
-# Script variables
-$currentUser = $Env:USERNAME
-
 # Copy files
 $ModuleParams = @{
     Path = "$PSScriptRoot\MattBobkeCmdlets.psm1";
