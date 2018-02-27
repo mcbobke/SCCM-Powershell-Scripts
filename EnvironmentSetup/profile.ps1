@@ -16,17 +16,21 @@ function prompt {
     Write-Host "@" -NoNewline -ForegroundColor DarkGray
     Write-Host "$Env:COMPUTERNAME" -NoNewline -ForegroundColor Magenta
     Write-Host " : " -NoNewline -ForegroundColor DarkGray
-    Write-Host "$(Get-Location)".Replace($Env:USERPROFILE, "~") -ForegroundColor Blue
+    Write-Host "$(Get-Location)".Replace($Env:USERPROFILE, "~") -ForegroundColor Yellow
     return ">" # The prompt function must return a string, or it will write the default prompt
 }
 
 # Variable to make editing options simpler
 $Shell = $Host.UI.RawUI
 
-Set-Location C:
 Import-Module MattBobkeCmdlets
 
-$Shell.WindowTitle = "Godmode Activated!"
+if (Test-Administrator) {
+    $Shell.WindowTitle = "Godmode Activated!"
+}
+else {
+    $Shell.WindowTitle = "You are POWERLESS!"
+}
 
 $BufferSize = $Shell.BufferSize
 $BufferSize.Width = 150
