@@ -9,7 +9,8 @@ $ModuleParams = @{
     Destination = "$Env:ProgramFiles\WindowsPowershell\Modules\MattBobkeCmdlets";
     Force = $True;
 }
-if (!(Test-Path $ModuleParams.Destination)) {
+if (!(Test-Path $ModuleParams.Destination))
+{
     New-Item -Path "$Env:ProgramFiles\WindowsPowershell\Modules" -ItemType Directory -Name "MattBobkeCmdlets"
 }
 Copy-Item @ModuleParams
