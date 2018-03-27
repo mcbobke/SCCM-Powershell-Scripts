@@ -1,3 +1,7 @@
+Param(
+    [Switch]$InstallSSH
+)
+
 # Copy files
 $ModuleParams = @{
     Path = "$PSScriptRoot\MattBobkeCmdlets.psm1";
@@ -15,6 +19,11 @@ $ProfileParams = @{
     Force = $True;
 }
 Copy-Item @ProfileParams
+
+if ($InstallSSH)
+{
+    & "$PSScriptRoot\Install-WinOpenSSH.ps1"
+}
 
 # Execute profile - will show errors if certain profiles don't exist
 & $profile.AllUsersAllHosts
