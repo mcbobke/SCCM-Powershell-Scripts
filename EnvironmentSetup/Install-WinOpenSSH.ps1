@@ -31,7 +31,8 @@ netsh advfirewall firewall add rule name=sshd dir=in action=allow protocol=TCP l
 net start sshd
 Set-Service sshd -StartupType Automatic
 Set-Service ssh-agent -StartupType Automatic
-New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name "DefaultShell" -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name "BobkePSProfileScript" -Value 1 -PropertyType Dword -Force
 
 # Cleanup
 Write-Host "Cleaning up..."
