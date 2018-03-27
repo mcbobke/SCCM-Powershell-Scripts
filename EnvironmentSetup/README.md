@@ -2,11 +2,11 @@
 
 ### Run as Non-Administrator
 
-[Non-Admin](https://github.com/mcbobke/Powershell-Scripting/tree/master/EnvironmentSetup/images/ps_standard.png)
+![Non-Admin](https://github.com/mcbobke/Powershell-Scripting/tree/master/EnvironmentSetup/images/ps_standard.png)
 
 ### Run as Administrator
 
-[Admin](https://github.com/mcbobke/Powershell-Scripting/tree/master/EnvironmentSetup/images/ps_admin.png)
+![Admin](https://github.com/mcbobke/Powershell-Scripting/tree/master/EnvironmentSetup/images/ps_admin.png)
 
 ### Installation
 
