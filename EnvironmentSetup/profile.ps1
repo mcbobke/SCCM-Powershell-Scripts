@@ -41,3 +41,6 @@ $WindowSize = $Shell.WindowSize
 $WindowSize.Width = 150
 $WindowSize.Height = 50
 $Shell.WindowSize = $WindowSize
+
+# Additonal PATH extension
+$env:Path += ";C:\Program Files\OpenSSH"

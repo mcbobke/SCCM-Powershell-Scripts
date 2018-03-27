@@ -15,7 +15,7 @@ Catch
 {
     $installedViaScript = 0
 }
-if ((Test-Path -Path "HKLM:\SOFTWARE\OpenSSH\BobkePSProfileScript") -and ($installedViaScript -eq 1))
+if ((Test-Path -Path "HKLM:\SOFTWARE\OpenSSH") -and ($installedViaScript -eq 1))
 {
     Write-Host "Uninstalling WinOpenSSH..."
     & "$PSScriptRoot\Uninstall-WinOpenSSH.ps1"
