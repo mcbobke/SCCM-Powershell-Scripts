@@ -23,10 +23,8 @@ $AllCMComputers = Get-CMDevice -CollectionId $AllDevicesCollectionID | Select-Ob
 $AllMissingComputers = @()
 $AllMissingComputers = {$AllMissingComputers}.Invoke()
 
-foreach ($name in $AllCMComputers)
-{
-    if ($name -notin $AllADComputers)
-    {
+foreach ($name in $AllCMComputers) {
+    if ($name -notin $AllADComputers) {
         $AllMissingComputers.Add($name)
     }
 }

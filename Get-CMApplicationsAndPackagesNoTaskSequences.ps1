@@ -30,10 +30,8 @@ $FinalPackages = {$FinalPackages}.Invoke()
 Write-Output "Converted to .NET collection."
 
 # Filter packages to only those that do not have their PackageID in the list of references
-foreach ($package in $AllPackages)
-{
-    if (($package.PackageID -notin $TSReferences) -and ($package.PackageID -notin $DeploymentPackageIDs))
-    {
+foreach ($package in $AllPackages) {
+    if (($package.PackageID -notin $TSReferences) -and ($package.PackageID -notin $DeploymentPackageIDs)) {
         $FinalPackages.Add($package)
     } 
 }
@@ -42,12 +40,12 @@ Write-Output "Filtered packages through references and deployment PackageIDs."
 
 # Final output to CSV
 $FinalApplications `
-    | Select-Object -Property LocalizedDisplayName,PackageID,DateCreated,DateLastModified,IsDeployable,IsEnabled,IsExpired,IsHidden,IsSuperseded `
+    | Select-Object -Property LocalizedDisplayName, PackageID, DateCreated, DateLastModified, IsDeployable, IsEnabled, IsExpired, IsHidden, IsSuperseded `
     | Sort-Object -Property LocalizedDisplayName `
     | Export-Csv -Path "C:\temp\SCCM_Apps.csv"
 
 $FinalPackages `
-    | Select-Object Name,PackageID,SourceDate,LastRefreshTime `
+    | Select-Object Name, PackageID, SourceDate, LastRefreshTime `
     | Sort-Object -Property Name `
     | Export-Csv -Path "C:\temp\SCCM_Packages.csv"
 
